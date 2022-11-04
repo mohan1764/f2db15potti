@@ -1,0 +1,17 @@
+extends layout
+block content
+    div(class="container-fluid")
+        h1= title
+    - let results=[{elephant_color:"gray",elephant_breed:"african bush elephant",elephant_price:1290},{elephant_color:"brown",elephant_breed:"boreno elephant",elephant_price:2500},{elephant_color:"white",elephant_breed:"sumatran elephant",elephant_price:3290}]
+        div(class="row")
+            each form,index in results
+                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_color}              
+                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_breed}                
+                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_price}
+                hr
+    script.
+        function buy(itemNo)
+        {
+            alert(`You purchased Item ${itemNo+1}`)
+        }
+
