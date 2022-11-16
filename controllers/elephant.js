@@ -89,4 +89,60 @@ exports.elephant_detail = async function(req, res) {
         failed`);
         }
         };
+        exports.elephant_delete = async function(req, res) {
+            console.log("delete " + req.params.id)
+            try {
+            result = await elephant.findByIdAndDelete( req.params.id)
+            console.log("Removed " + result)
+            res.send(result)
+            } catch (err) {
+            res.status(500)
+            res.send(`{"error": Error deleting ${err}}`);
+            }
+        };
+        exports.elephant_view_one_Page = async function(req, res) {
+            console.log("single view for id " + req.query.id)
+            try{
+            result = await elephant.findById( req.query.id)
+            res.render('elephantdetail',
+            { title: 'elephant Detail', toShow: result });
+            }
+            catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+            }
+            };
+            exports.elephant_create_Page = function(req, res) {
+                console.log("create view")
+                try{
+                res.render('elephantcreate', { title: 'elephant Create'});
+                }
+                catch(err){
+                res.status(500)
+                res.send(`{'error': '${err}'}`);
+                }
+                };
+                exports.elephant_update_Page = async function(req, res) {
+                    console.log("update view for item "+req.query.id)
+                    try{
+                    let result = await elephant.findById(req.query.id)
+                    res.render('elephantupdate', { title: 'elephant Update', toShow: result });
+                    }
+                    catch(err){
+                    res.status(500)
+                    res.send(`{'error': '${err}'}`);
+                    }
+                    }
+                    exports.elephant_delete_Page = async function(req, res) {
+                        console.log("Delete view for id " + req.query.id)
+                        try{
+                        result = await elephant.findById(req.query.id)
+                        res.render('elephantdelete', { title: 'elephant Delete', toShow:
+                        result });
+                        }
+                        catch(err){
+                        res.status(500)
+                        res.send(`{'error': '${err}'}`);
+                        }
+                        };
         

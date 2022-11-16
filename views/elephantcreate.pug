@@ -1,0 +1,28 @@
+extends layout
+block content
+ h1= title
+ form(id='elephantForm', action="/resource/elephants", method="POST")
+  div.form-group
+   label.elephantAttr(for='elephant_color') elephant Color
+   input#elephant_color(type='text', name='elephant_color')
+  div.form-group
+   label.elephantAttr(for='elephant_breed') elephant Breed
+   input#elephant_breed(type='text', name='elephant_breed')
+  div.form-group
+   label.elephantAttr(for='elephant_price') elephant Cost 
+   input#elephant_price(type='text', name='elephant_price')
+  input(type="submit")
+ script.
+  document.forms['elephantForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+    }).then((resp) => {
+        return resp.json();
+    }).then((body) => {
+        alert("Save succeded")
+    }).catch((error) => {
+        alert("Save failed " + error )
+    });
+   }); 
