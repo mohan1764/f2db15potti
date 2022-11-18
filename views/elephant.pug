@@ -2,16 +2,20 @@ extends layout
 block content
     div(class="container-fluid")
         h1= title
-         - let result= results
-        div(class="row")
-            each form,index in result
-                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_color}              
-                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_breed}                
-                div(class = "col-sm-2 bg-warning" onclick=`buy(${index})`) #{form.elephant_price}
-                hr
+    - let result= results
+        div(class="container-fluid")
+          div(class="row m-1")
+           each item in result
+            -let destination = `dispatch(\"/elephant/update?id=${item._id}\")`
+            div(class="row-sm-2", class="m-1") Item #{item.elephant_color}(#{item.elephant_breed}) is #{item.elephant_cost}
+             button.btn( class="btn-primary ml-1", onclick= destination) Update 
     script.
         function buy(itemNo)
         {
             alert(`You purchased Item ${itemNo+1}`)
+        }
+    script.
+        function dispatch(path){
+            window.location.href=path
         }
 
