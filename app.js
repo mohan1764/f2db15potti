@@ -24,7 +24,9 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
     }));
-var Account =require('./models/account'));
+app.use(passport.initialize());
+app.use(passport.session());
+var Account =require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
