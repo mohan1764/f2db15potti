@@ -19,13 +19,7 @@ passport.use(new LocalStrategy(
      return done(null, user);
    });
   }));
-app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-    }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 var Account =require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
@@ -51,7 +45,7 @@ var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
 var resourceRouter = require('./routes/resource');
 var elephant = require("./models/elephant");
-const { default: mongoose } = require('mongoose');
+
 var app = express();
 
 async function recreateDB(){
@@ -87,6 +81,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+  }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
